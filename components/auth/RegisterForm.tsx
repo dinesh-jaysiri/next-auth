@@ -16,8 +16,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import FormError from "@/components/FormError";
-import { loginAction } from "@/actions/login";
 import FormSuccess from "@/components/FormSuccess";
+import { registerAction } from "@/actions/register";
 
 function RegisterForm() {
   const form = useForm<z.infer<typeof RegisterSchema>>({
@@ -37,7 +37,7 @@ function RegisterForm() {
     setErrorMessage("");
     setSuccessMessage("");
     startTransition(() =>
-      loginAction(value).then((data) => {
+      registerAction(value).then((data) => {
         setErrorMessage(data?.error);
         setSuccessMessage(data?.success);
       }),

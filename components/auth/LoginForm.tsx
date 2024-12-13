@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useTransition } from "react";
+import React, { useState } from "react";
 import CardWrapper from "@/components/auth/CardWrapper";
 import { useForm } from "react-hook-form";
 import { LoginSchema } from "@/schemas";
@@ -28,19 +28,22 @@ function LoginForm() {
     },
   });
 
-  const [isPending, startTransition] = useTransition();
+  const [isPending, setIsPending] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>("");
   const [successMessage, setSuccessMessage] = useState<string | undefined>("");
 
-  const onSubmit = (value: z.infer<typeof LoginSchema>) => {
+  const onSubmit = async (value: z.infer<typeof LoginSchema>) => {
     setErrorMessage("");
     setSuccessMessage("");
-    startTransition(() =>
-      loginAction(value).then((data) => {
-        setErrorMessage(data?.error);
-        setSuccessMessage(data?.success);
-      }),
-    );
+    setIsPending(true);
+    try {
+      const data = await loginAction(value);
+      setErrorMessage(data?.error);
+      setSuccessMessage(data?.success);
+      setIsPending(false);
+    } catch (error) {
+      setIsPending(false);
+    }
   };
 
   return (

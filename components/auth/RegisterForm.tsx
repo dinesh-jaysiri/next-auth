@@ -29,19 +29,20 @@ function RegisterForm() {
     },
   });
 
-  const [isPending, startTransition] = useTransition();
+  const [isPending, setIsPending] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>("");
   const [successMessage, setSuccessMessage] = useState<string | undefined>("");
 
   const onSubmit = (value: z.infer<typeof RegisterSchema>) => {
     setErrorMessage("");
     setSuccessMessage("");
-    startTransition(() =>
-      registerAction(value).then((data) => {
+    setIsPending(true);
+    registerAction(value)
+      .then((data) => {
         setErrorMessage(data?.error);
         setSuccessMessage(data?.success);
-      }),
-    );
+      })
+      .finally(() => setIsPending(false));
   };
 
   return (

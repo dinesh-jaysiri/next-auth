@@ -2,7 +2,7 @@
 
 import { RegisterSchema } from "@/schemas";
 import z from "zod";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import prisma from "@/prisma/client";
 import { getUserByEmail } from "@/prisma/data/user";
 
@@ -12,16 +12,22 @@ export const registerAction = async (
   error?: string;
   success?: string;
 }> => {
-  const validatedFields = await RegisterSchema.safeParse(value);
+  const validatedFields = RegisterSchema.safeParse(value);
 
-  if (!validatedFields) return { error: "Invalid fields!" };
+  if (!validatedFields.success) {
+    return { error: "Invalid fields!" };
+  }
 
-  const { name, email, password } = validatedFields.data;
+  const { password, name, email } = validatedFields.data;
+
+  // Check if the user already exists
+  const user = await getUserByEmail(email);
+  if (user) {
+    return { error: "Email already in use!" };
+  }
+
+  // Hash the password and create the user
   const hashedPassword = await bcrypt.hash(password, 10);
-
-  const existingUser = await getUserByEmail(email);
-  if (existingUser) return { error: "Email already in use!" };
-
   await prisma.user.create({
     data: {
       name,
@@ -30,7 +36,7 @@ export const registerAction = async (
     },
   });
 
-  //TODO:send verification email
+  // TODO: Send verification email
 
   return { success: "User created!" };
 };

@@ -5,6 +5,8 @@ import z from "zod";
 import bcrypt from "bcryptjs";
 import prisma from "@/prisma/client";
 import { getUserByEmail } from "@/prisma/data/user";
+import { generateVerificationToken } from "@/prisma/data/verficationToken";
+import { sendVerificationEmail } from "@/lib/mail";
 
 export const registerAction = async (
   value: z.infer<typeof RegisterSchema>,
@@ -36,7 +38,14 @@ export const registerAction = async (
     },
   });
 
-  // TODO: Send verification email
-
-  return { success: "User created!" };
+  try {
+    const verificationToken = await generateVerificationToken(email);
+    await sendVerificationEmail(
+      verificationToken.email,
+      verificationToken.token,
+    );
+    return { success: "Confirmation email sent!" };
+  } catch {
+    return { error: "Something went wrong!" };
+  }
 };

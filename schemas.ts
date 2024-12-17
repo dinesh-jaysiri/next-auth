@@ -10,3 +10,7 @@ export const RegisterSchema = z.object({
   email: z.string().email().max(255),
   password: z.string().min(6, "Minimum 6 characters required").max(255),
 });
+
+export const ResetSchema = z.object({
+  email: z.string().email().max(255),
+});

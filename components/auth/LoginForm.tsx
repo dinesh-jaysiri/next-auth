@@ -18,6 +18,8 @@ import { Button } from "@/components/ui/button";
 import FormError from "@/components/FormError";
 import { loginAction } from "@/actions/login";
 import FormSuccess from "@/components/FormSuccess";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 function LoginForm() {
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -28,6 +30,11 @@ function LoginForm() {
     },
   });
 
+  const searchParams = useSearchParams();
+  const loginError =
+    searchParams.get("error") === "OAuthAccountNotLinked"
+      ? "Use original provider to login"
+      : "";
   const [isPending, setIsPending] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>("");
   const [successMessage, setSuccessMessage] = useState<string | undefined>("");
@@ -88,11 +95,20 @@ function LoginForm() {
                       type="password"
                     />
                   </FormControl>
+
+                  <Button
+                    size="sm"
+                    variant="link"
+                    asChild
+                    className="px-0 font-normal"
+                  >
+                    <Link href="/auth/reset">Forgot password?</Link>
+                  </Button>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <FormError message={errorMessage} />
+            <FormError message={errorMessage || loginError} />
             <FormSuccess message={successMessage} />
             <Button disabled={isPending} className="w-full" type={"submit"}>
               Login

@@ -21,7 +21,6 @@ export const getVerificationTokenByToken = async (
     });
     return verificationToken;
   } catch {
-    console.log("error");
     return null;
   }
 };

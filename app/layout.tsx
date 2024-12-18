@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import ThemeProvider from "@/app/ThemeProvider";
 import AuthProvider from "@/app/AuthProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const font = Poppins({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <Toaster />
             {children}
           </ThemeProvider>
         </body>

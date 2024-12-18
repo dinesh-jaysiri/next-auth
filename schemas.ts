@@ -3,6 +3,7 @@ import z from "zod";
 export const LoginSchema = z.object({
   email: z.string().email().max(255),
   password: z.string().min(1, "Password is required").max(255),
+  code: z.string().max(225).min(6).optional(),
 });
 
 export const RegisterSchema = z.object({

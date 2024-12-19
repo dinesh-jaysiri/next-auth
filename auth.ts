@@ -6,7 +6,7 @@ import Credentials from "next-auth/providers/credentials";
 import prisma from "@/prisma/client";
 import { LoginSchema } from "@/schemas";
 import { getUserByEmail, getUserById } from "@/prisma/data/user";
-import { User, UserRole } from "@prisma/client";
+import { UserRole } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { getTwoFactorConfirmationByUserId } from "@/prisma/data/twoFactorConfirmation";
 import { getAccountByUserId } from "@/prisma/data/account";

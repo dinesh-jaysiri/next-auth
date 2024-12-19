@@ -6,6 +6,7 @@ import {
   publicRoutes,
 } from "@/routes";
 import { NextResponse } from "next/server";
+import { callback } from "@auth/core/lib/actions";
 
 export default auth((req) => {
   const { nextUrl } = req;
@@ -24,8 +25,18 @@ export default auth((req) => {
     return NextResponse.next();
   }
 
-  if (!isLoggedIn && !isPublicRoute)
-    return NextResponse.redirect(new URL("/auth/login", nextUrl));
+  if (!isLoggedIn && !isPublicRoute) {
+    let callbackUrl = nextUrl.pathname;
+    if (nextUrl.search) {
+      callbackUrl += nextUrl.search;
+    }
+
+    const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+
+    return NextResponse.redirect(
+      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl),
+    );
+  }
 
   return NextResponse.next();
 });

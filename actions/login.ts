@@ -18,6 +18,7 @@ import prisma from "@/prisma/client";
 
 export const loginAction = async (
   value: z.infer<typeof LoginSchema>,
+  callbackUrl?: string,
 ): Promise<
   | {
       error?: string;
@@ -91,10 +92,9 @@ export const loginAction = async (
       await signIn("credentials", {
         email,
         password,
-        redirectTo: DEFAULT_LOGIN_REDIRECT,
+        redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
       });
     } catch (error) {
-      console.log(error);
       if (isRedirectError(error)) {
         throw error;
       }

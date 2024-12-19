@@ -1,13 +1,19 @@
+"use client";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { signIn } from "next-auth/react";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { useSearchParams } from "next/navigation";
 
 function Social() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
   const onClick = async (provider: "google" | "github") => {
     // Use callbackUrl instead of redirectTo
-    await signIn(provider, { callbackUrl: DEFAULT_LOGIN_REDIRECT });
+    await signIn(provider, {
+      callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
+    });
   };
 
   return (

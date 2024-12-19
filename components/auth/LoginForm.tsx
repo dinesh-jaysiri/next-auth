@@ -31,6 +31,7 @@ function LoginForm() {
   });
 
   const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
   const loginError =
     searchParams.get("error") === "OAuthAccountNotLinked"
       ? "Use original provider to login"
@@ -45,7 +46,7 @@ function LoginForm() {
     setSuccessMessage("");
     setIsPending(true);
     try {
-      const data = await loginAction(value);
+      const data = await loginAction(value, callbackUrl);
       if (data?.error || data?.success) form.reset();
       setErrorMessage(data?.error);
       setSuccessMessage(data?.success);

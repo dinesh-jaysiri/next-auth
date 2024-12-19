@@ -3,11 +3,11 @@ import React, { useCallback, useEffect, useState } from "react";
 import CardWrapper from "@/components/auth/CardWrapper";
 import { BeatLoader } from "react-spinners";
 import { useSearchParams } from "next/navigation";
-import { newVerification } from "@/actions/new-verification";
+import { newVerificationAction } from "@/actions/new-verification-action";
 import FormError from "@/components/FormError";
 import FormSuccess from "@/components/FormSuccess";
 
-function NewVerificationForm(props) {
+function NewVerificationForm() {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const searchParams = useSearchParams();
@@ -17,10 +17,10 @@ function NewVerificationForm(props) {
       setErrorMessage("Missing token!");
       return;
     }
-    newVerification(token)
+    newVerificationAction(token)
       .then((data) => {
-        setSuccessMessage(data?.success);
-        setErrorMessage(data?.error);
+        setSuccessMessage(data?.success || "");
+        setErrorMessage(data?.error || "");
       })
       .catch(() => setErrorMessage("Something wet wrong!"));
   }, [token]);

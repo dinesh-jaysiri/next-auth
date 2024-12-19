@@ -6,7 +6,6 @@ import {
   publicRoutes,
 } from "@/routes";
 import { NextResponse } from "next/server";
-import { callback } from "@auth/core/lib/actions";
 
 export default auth((req) => {
   const { nextUrl } = req;

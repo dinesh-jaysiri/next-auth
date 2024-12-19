@@ -18,14 +18,8 @@ import prisma from "@/prisma/client";
 
 export const loginAction = async (
   value: z.infer<typeof LoginSchema>,
-  callbackUrl?: string,
-): Promise<
-  | {
-      error?: string;
-      success?: string;
-    }
-  | undefined
-> => {
+  callbackUrl?: string | null,
+) => {
   const validatedFields = LoginSchema.safeParse(value);
 
   if (!validatedFields.success) return { error: "Invalid fields!" };
@@ -41,7 +35,7 @@ export const loginAction = async (
   if (!existingUser.emailVerified) {
     try {
       const verificationToken = await generateVerificationToken(
-        existingUser.email,
+        existingUser.email!,
       );
       await sendVerificationEmail(
         verificationToken.email,

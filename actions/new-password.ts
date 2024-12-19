@@ -9,7 +9,7 @@ import { NewPasswordSchema } from "@/schemas";
 
 export const newPasswordAction = async (
   value: z.infer<typeof NewPasswordSchema>,
-  token?: string,
+  token?: string | null,
 ) => {
   console.log(token);
   if (!token) return { error: "Missing token!" };

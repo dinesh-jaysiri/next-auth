@@ -12,25 +12,25 @@ import bcrypt from "bcryptjs";
 export const settingsAction = async (
   values: z.infer<typeof SettingsSchema>,
 ) => {
-  const { user } = await auth();
+  const session = await auth();
 
-  if (!user) return { error: "Unauthorized" };
+  if (!session?.user) return { error: "Unauthorized" };
 
-  const dbUser = await getUserById(user.id);
+  const dbUser = await getUserById(session.user.id!);
 
   if (!dbUser) return { error: "unauthorized" };
 
-  if (user.isOAuth) {
+  if (session?.user.isOAuth) {
     values.email = undefined;
     values.password = undefined;
     values.newPassword = undefined;
     values.isTwoFactorEnabled = undefined;
   }
 
-  if (values.email && values.email !== user.email) {
+  if (values.email && values.email !== session?.user.email) {
     const existingUser = await getUserByEmail(values.email);
 
-    if (existingUser && existingUser.id !== user.id) {
+    if (existingUser && existingUser.id !== session?.user.id) {
       return { error: "Email already in use!" };
     }
 
@@ -60,8 +60,6 @@ export const settingsAction = async (
     where: { id: dbUser.id },
     data: { ...values },
   });
-
-  update();
 
   return { success: "Settings updated!" };
 };

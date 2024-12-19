@@ -17,7 +17,7 @@ function UserButton() {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
-          <AvatarImage src={user?.image} />
+          <AvatarImage src={user?.image || ""} />
           <AvatarFallback className="bg-emerald-500">
             <FaUser className="text-white" />
           </AvatarFallback>

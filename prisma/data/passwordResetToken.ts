@@ -2,9 +2,7 @@ import prisma from "@/prisma/client";
 import { v4 as uuidv4 } from "uuid";
 import { PasswordResetToken } from "@prisma/client";
 
-export const getPasswordRestTokenByToken = async (
-  token: string,
-): PasswordResetToken | null => {
+export const getPasswordRestTokenByToken = async (token: string) => {
   try {
     const resetToken = await prisma.passwordResetToken.findUnique({
       where: { token: token },
@@ -14,9 +12,7 @@ export const getPasswordRestTokenByToken = async (
     return null;
   }
 };
-export const getPasswordRestTokenByEmail = async (
-  email: string,
-): PasswordResetToken | null => {
+export const getPasswordRestTokenByEmail = async (email: string) => {
   try {
     const passwordResetToken = await prisma.passwordResetToken.findFirst({
       where: { email },
@@ -27,9 +23,7 @@ export const getPasswordRestTokenByEmail = async (
   }
 };
 
-export const generatePasswordResetToken = async (
-  email: string,
-): PasswordResetToken => {
+export const generatePasswordResetToken = async (email: string) => {
   const token = uuidv4();
   const expires = new Date(Date.now() + 3600 * 1000);
 

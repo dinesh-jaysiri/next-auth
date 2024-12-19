@@ -1,6 +1,5 @@
 import prisma from "@/prisma/client";
 import { v4 as uuidv4 } from "uuid";
-import { VerificationToken } from "@prisma/client";
 
 export const getVerificationTokenByEmail = async (email: string) => {
   try {
@@ -12,9 +11,7 @@ export const getVerificationTokenByEmail = async (email: string) => {
   }
 };
 
-export const getVerificationTokenByToken = async (
-  token: string,
-): VerificationToken | null => {
+export const getVerificationTokenByToken = async (token: string) => {
   try {
     const verificationToken = await prisma.verificationToken.findUnique({
       where: { token: token },

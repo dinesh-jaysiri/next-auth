@@ -1,7 +1,7 @@
 import React from "react";
 import NewVerificationForm from "@/components/auth/NewVerificationForm";
 
-function NewVerification(props) {
+function NewVerification() {
   return <NewVerificationForm />;
 }
 

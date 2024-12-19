@@ -8,6 +8,9 @@ import {
   getPasswordRestTokenByEmail,
 } from "@/prisma/data/passwordResetToken";
 import { getUserByEmail } from "@/prisma/data/user";
+import { PasswordResetToken } from "@prisma/client";
+import { Simulate } from "react-dom/test-utils";
+import error = Simulate.error;
 
 export const resetAction = async (
   value: z.infer<typeof ResetSchema>,
@@ -32,8 +35,11 @@ export const resetAction = async (
 
   try {
     const passwordRestToken = await generatePasswordResetToken(
-      existingUser.email,
+      existingUser.email!,
     );
+    if (!passwordRestToken) {
+      return { error: "Something went wrong!" };
+    }
     await sendPasswordResetEmail(
       passwordRestToken.email,
       passwordRestToken.token,

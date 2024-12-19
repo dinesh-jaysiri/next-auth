@@ -3,7 +3,7 @@ import { getVerificationTokenByToken } from "@/prisma/data/verficationToken";
 import { getUserByEmail } from "@/prisma/data/user";
 import prisma from "@/prisma/client";
 
-export const newVerification = async (token: string) => {
+export const newVerificationAction = async (token: string) => {
   const existingToken = await getVerificationTokenByToken(token);
 
   if (!existingToken) return { error: "Token does not exist!" };

@@ -65,7 +65,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // Allow OAuth without email verification
       if (account?.provider !== "credentials") return true;
 
-      const existingUser = await getUserById(user.id);
+      const existingUser = await getUserById(user.id!);
       if (!existingUser?.emailVerified) return false;
 
       if (existingUser.isTwoFactorEnabled) {
@@ -107,7 +107,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (session.user) {
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
         session.user.name = token.name;
-        session.user.email = token.email;
+        session.user.email = token.email as string;
         session.user.isOAuth = token.isOAuth as boolean;
       }
 

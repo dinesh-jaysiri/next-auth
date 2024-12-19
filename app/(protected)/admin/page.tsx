@@ -35,7 +35,7 @@ function Page() {
         </div>
         <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-md">
           <p className="text-sm font-medium">Admin-only Server Action</p>
-          <Button>Click to test</Button>
+          <Button onClick={onApiRouteClick}>Click to test</Button>
         </div>
       </CardContent>
     </Card>

@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🔐 NextAuth Starter Template
 
-## Getting Started
+NextAuth Starter Template is a **fully-featured authentication system** built with **Next.js, Auth.js v5, Prisma, and PostgreSQL**. It includes **email/password authentication, social login (Google & GitHub), role-based access control, email verification, and session management**. The project also provides **a settings page for managing authentication preferences**, such as enabling/disabling two-factor authentication and updating email/passwords.
 
-First, run the development server:
+🚀 **Live Demo:** [NextAuth Starter](https://next-auth-dinesh-jayasiri.vercel.app/)  
+📂 **GitHub Repo:** [dinesh-jaysiri/next-auth](https://github.com/dinesh-jaysiri/next-auth)  
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+✅ **Sign In & Sign Up** - Secure email/password authentication  
+✅ **Social Login** - Google & GitHub OAuth integration  
+✅ **Forgot Password & Reset Password** - Secure password recovery  
+✅ **Email Verification** - Ensure user authenticity before login  
+✅ **Role-Based Authentication** - Restrict access based on roles (Admin, User, etc.)  
+✅ **Two-Factor Authentication (2FA)** - Enable/disable via settings page  
+✅ **Update Email & Password** - Users can modify credentials securely  
+✅ **Session Management** - Server & client-side session handling hooks  
+✅ **Transactional Emails** - Send verification & password reset emails via **Resend API**  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🛠️ Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Frontend:** Next.js (App Router), TypeScript, ShadCN UI  
+- **Authentication:** Auth.js v5 (NextAuth)  
+- **Database:** Prisma ORM with **Neon PostgreSQL**  
+- **Email Service:** Resend API for email verification & password reset  
+- **State Management:** React Context API  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
